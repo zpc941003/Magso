@@ -9,6 +9,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.PopupMenu;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -51,6 +52,7 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
     private boolean stopLoading = false;
     private LinearLayout footer;
     private FrameLayout gray;
+    private long exitTime = 0;
 
     private String route = "http://zhongzicili.com/zhongzi/";
     private String order = "0";
@@ -66,6 +68,21 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
         scrollListen();
         popupMenu();
         listClick();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN){
+            if((System.currentTimeMillis()-exitTime) > 2000){
+                Toast.makeText(getApplicationContext(), "再按一次退出程序", Toast.LENGTH_SHORT).show();
+                exitTime = System.currentTimeMillis();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 
     private void listClick() {
