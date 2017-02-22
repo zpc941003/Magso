@@ -88,9 +88,13 @@ public class MainActivity extends AppCompatActivity implements MaterialSearchBar
                                     ) {
                                 Elements items = i.getElementsByTag("p");
                                 Log.d(TAG, "itemsize:" + items.size());
-                                for (int j = 1; j <= items.size(); j++) {
+                                for (int j = 0; j < items.size(); j++) {
                                     TextView tv = new TextView(mContext);
-                                    tv.setText(j + "-" + items.get(j - 1).child(1).text().toString() + " (" + items.get(j - 1).child(2).text().toString() + ")");
+                                    if(items.size()==1){
+                                        tv.setText(items.get(j).text().toString());
+                                    }else {
+                                        tv.setText(j + 1 + "-" + items.get(j).child(1).text().toString() + " (" + items.get(j).child(2).text().toString() + ")");
+                                    }
                                     linearLayout.addView(tv);
                                 }
                             }
